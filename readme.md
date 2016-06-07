@@ -1,6 +1,6 @@
 # Browser Clock
 
-It's simple clock sample, this runs as Chrome extension, which was developed with ES2015 natively.
+Simple Chrome extension to show how to use ES2015 for development extension
 
 # Run for test
 
