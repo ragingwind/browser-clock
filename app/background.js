@@ -1,41 +1,52 @@
-var clock = {
-	RED:0,
-	GREEN:1,
-	BLUE:2,
-	COLOR:0,
-	color: [0, 0, 0, 255],
-	changeColor: function() {
-		clock.color[clock.COLOR] += 10;
-		if (clock.color[clock.COLOR] > 255)
-			clock.color[clock.COLOR] = 0;
-	},
-	draw: function() {
-		chrome.browserAction.setBadgeBackgroundColor({color:clock.color});
-		var now = new Date();
-		var timeString = now.getHours() + ":" + now.getMinutes();
-		chrome.browserAction.setBadgeText({text:timeString});
-
-		if (now.getHours() > 12)
-			chrome.browserAction.setIcon({path:"pm.png"});
-		else
-			chrome.browserAction.setIcon({path:"am.png"});
-		clock.changeColor();
-	},
-	tick: function() {
-		clock.draw();
-		clock.start();
-	},
-	start: function() {
-		console.log("start clock");
-		window.setTimeout(clock.tick, 200);
+class Clock {
+	constructor() {
+		this.colorPos = 0;
+		this.color = [0, 0, 0, 255];
 	}
-};
 
-clock.start();
+	changeColor() {
+		const c = this.color[this.colorPos] + 10;
+		if (c > 255) {
+			this.colorPos++;
+			if (this.colorPos > 3) {
+				c = 0;
+				this.colorPos = 0;
+			}
+		}
 
-chrome.browserAction.onClicked.addListener(function(tab) {
-	if (clock.COLOR < clock.BLUE)
-		clock.COLOR++;
-	else
-		clock.COLOR = clock.RED;
-});
+		this.color[this.colorPos] = c;
+	}
+
+	draw() {
+		const now = new Date();
+		const timeString = now.getHours() + ":" + now.getMinutes();
+
+		chrome.browserAction.setBadgeBackgroundColor({
+			color:this.color
+		});
+
+		chrome.browserAction.setBadgeText({
+			text:timeString
+		});
+
+		chrome.browserAction.setIcon({
+			path:`images/${now.getHours() > 12 ? 'pm' : 'am'}.png`
+		});
+
+		this.changeColor();
+	}
+
+	tick() {
+		this.draw();
+		this.start();
+	}
+
+	start() {
+		window.setTimeout(() => {this.tick()}, 1000);
+	}
+}
+
+if (!window.clock) {
+	window.clock = new Clock();
+	window.clock.start();
+}
