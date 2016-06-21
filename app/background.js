@@ -1,27 +1,46 @@
+class Colour {
+  constructor() {
+    this.color = [0, 0, 0, 255];
+  }
+
+  change() {
+    return this.color;
+  }
+}
+
+class HueCycleColour extends Colour {
+  constructor() {
+    super();
+
+    this.frequency = 3;
+    this.iterator = 0;
+  }
+
+  change() {
+    this.color[0] = Math.floor(Math.sin(this.frequency * this.iterator * 0) * 127 + 128);
+    this.color[2] = Math.floor(Math.sin(this.frequency * this.iterator * 4) * 127 + 128);
+    this.color[1] = Math.floor(Math.sin(this.frequency * this.iterator * 2) * 127 + 128);
+    this.iterator++;
+
+    if (this.iterator >= 32) {
+      this.iterator = 0;
+    }
+
+    return this.color;
+  }
+}
+
 class Clock {
 	constructor() {
-    this.frequency = 3;
-		this.colorPos = 0;
-		this.color = [0, 0, 0, 255];
+		this.color = new HueCycleColour();
 	}
-
-  changeColor() {
-    this.color[0] = Math.floor(Math.sin(this.frequency * this.colorPos * 0) * 127 + 128);
-    this.color[2] = Math.floor(Math.sin(this.frequency * this.colorPos * 4) * 127 + 128);
-    this.color[1] = Math.floor(Math.sin(this.frequency * this.colorPos * 2) * 127 + 128);
-    this.colorPos++;
-
-    if (this.colorPos >= 32) {
-      this.colorPos = 0;
-    }
-  }
 
 	draw() {
 		const now = new Date();
 		const timeString = now.getHours() + ":" + now.getMinutes();
 
 		chrome.browserAction.setBadgeBackgroundColor({
-			color:this.color
+			color:this.color.change()
 		});
 
 		chrome.browserAction.setBadgeText({
@@ -31,8 +50,6 @@ class Clock {
 		chrome.browserAction.setIcon({
 			path:`images/${now.getHours() > 12 ? 'pm' : 'am'}.png`
 		});
-
-		this.changeColor();
 	}
 
 	tick() {
