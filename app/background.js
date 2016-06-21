@@ -1,21 +1,20 @@
 class Clock {
 	constructor() {
+    this.frequency = 3;
 		this.colorPos = 0;
 		this.color = [0, 0, 0, 255];
 	}
 
-	changeColor() {
-		const c = this.color[this.colorPos] + 10;
-		if (c > 255) {
-			this.colorPos++;
-			if (this.colorPos > 3) {
-				c = 0;
-				this.colorPos = 0;
-			}
-		}
+  changeColor() {
+    this.color[0] = Math.floor(Math.sin(this.frequency * this.colorPos * 0) * 127 + 128);
+    this.color[2] = Math.floor(Math.sin(this.frequency * this.colorPos * 4) * 127 + 128);
+    this.color[1] = Math.floor(Math.sin(this.frequency * this.colorPos * 2) * 127 + 128);
+    this.colorPos++;
 
-		this.color[this.colorPos] = c;
-	}
+    if (this.colorPos >= 32) {
+      this.colorPos = 0;
+    }
+  }
 
 	draw() {
 		const now = new Date();
