@@ -1,22 +1,29 @@
 class Clock {
 	constructor() {
 		this.color = new HueCycleColour();
+    this.hour24 = false;
+
+    chrome.browserAction.onClicked.addListener(() => {
+      this.hour24 ^= true;
+    });
 	}
 
 	draw() {
 		const now = new Date();
-		const timeString = now.getHours() + ":" + now.getMinutes();
+    let hour = now.getHours();
+
+    hour = this.hour24 ? (hour > 12 ? hour - 12 : hour) : hour;
 
 		chrome.browserAction.setBadgeBackgroundColor({
 			color:this.color.change()
 		});
 
 		chrome.browserAction.setBadgeText({
-			text:timeString
+			text:`${hour}:${now.getMinutes()}`
 		});
 
 		chrome.browserAction.setIcon({
-			path:`images/${now.getHours() > 12 ? 'pm' : 'am'}.png`
+			path:`images/${this.hour24 ? hour > 12 ? 'pm' : 'am' : 'icon-16'}.png`
 		});
 	}
 
