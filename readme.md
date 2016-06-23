@@ -1,6 +1,6 @@
 # Browser Clock
 
-Simple Chrome extension to show how to use ES2015 for development extension
+⏰Simple Chrome extension to show how to use ES2015 for development extension
 
 # Run for test
 
