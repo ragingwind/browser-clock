@@ -7,7 +7,7 @@
   "scripts": {
     "build:res": "cpy '**/*.*' '!*.js' ../dist/ --cwd=src --parents",
     "build:script": "browserify ./src/background.js -o ./dist/background.js -t [ babelify --presets [ es2015 ] ]",
-    "build": "rm -rf dist && mkdir dist && npm run build:res && npm run build:script",
+    "build": "rm -rf dist && mkdir dist && npm run build:script && npm run build:res",
     "test": "xo"
   },
   "devDependencies": {
