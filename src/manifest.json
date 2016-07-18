@@ -5,18 +5,17 @@
   "description": "__MSG_appDescription__",
   "icons": {
     "16": "images/icon-16.png",
-    "128": "images/icon-128.png"
+    "128": "images/icon-128.png",
+    "512": "images/icon-512.png"
   },
   "default_locale": "en",
   "background": {
     "scripts": [
       "colour.js",
+      "clock.js",
       "background.js"
     ]
   },
-  "icons": {
-		"128": "images/icon-128.png"
-	},
 	"browser_action": {
 		"default_title": "Browser clock"
  	},

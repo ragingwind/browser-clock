@@ -1,5 +1,5 @@
 // Base class for Colour
-class Colour {
+export default class Colour {
   constructor() {
     this.color = [0, 0, 0, 255];
   }
@@ -10,7 +10,7 @@ class Colour {
 }
 
 // HueCycleColour pattern drawer
-class HueCycleColour extends Colour {
+export class HueCycleColour extends Colour {
   constructor() {
     super();
 
@@ -32,10 +32,10 @@ class HueCycleColour extends Colour {
   }
 }
 
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(factory((global || {})));
-}(this, function (exports) { 'use strict';
-  exports.Colour = Colour;
-}));
+// (function (global, factory) {
+// 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+// 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+// 	(factory((global || {})));
+// }(this, function (exports) { 'use strict';
+//   exports.Colour = Colour;
+// }));

@@ -1,24 +1,19 @@
 {
-  "name": "Browser Clock",
+  "name": "browser-clock",
   "private": true,
   "engines": {
     "node": ">=6"
   },
-  "devDependencies": {},
-  "eslintConfig": {
-    "env": {
-      "node": true,
-      "browser": true
-    },
-    "globals": {
-      "chrome": true
-    },
-    "rules": {
-      "eol-last": 0,
-      "quotes": [
-        2,
-        "single"
-      ]
-    }
+  "scripts": {
+    "build:res": "cp -r ./src/_locales ./dist/_locales && cp -r ./src/images ./dist/images && cp src/manifest.json dist/manifest.json",
+    "build:script": "browserify ./src/background.js -o ./dist/background.js -t [ babelify --presets [ es2015 ] ]",
+    "build": "rm -rf dist && mkdir dist && npm run build:res && npm run build:script",
+    "test": "xo"
+  },
+  "devDependencies": {
+    "babel-core": "^6.10.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.0.1"
   }
 }
