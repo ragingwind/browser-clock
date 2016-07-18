@@ -19,15 +19,16 @@ export default class Clock {
 		}
 
 		chrome.browserAction.setBadgeBackgroundColor({
-			color:this.color.change()
+			color: this.color.change()
 		});
 
 		chrome.browserAction.setBadgeText({
-			text:`${hour}:${now.getMinutes()}`
+			text: `${hour}:${now.getMinutes()}`
 		});
 
+		const pa = hour > 12 ? 'pm' : 'am';
 		chrome.browserAction.setIcon({
-			path:`images/${this.hour24 ? hour > 12 ? 'pm' : 'am' : 'icon-16'}.png`
+			path: `images/${this.hour24 ? pa : 'icon-16'}.png`
 		});
 	}
 
@@ -37,6 +38,6 @@ export default class Clock {
 	}
 
 	start() {
-		window.setTimeout(() => {this.tick()}, 1000);
+		window.setTimeout(() => this.tick(), 1000);
 	}
 }
